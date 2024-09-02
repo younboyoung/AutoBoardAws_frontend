@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Button,
     FormControl,
@@ -23,7 +23,7 @@ function CustomEmailField() {
     return (
         <TextField
             id="input-with-icon-textfield"
-            label="Username"
+            label="Email Address"
             name="email"
             type="email"
             size="small"
@@ -103,19 +103,19 @@ function CustomButton() {
 
 function SignUpLink() {
     return (
-        <Link href="/" variant="body2">
+        <Link href="/signup" variant="body2">
             Sign up
         </Link>
     );
 }
 
-function ForgotPasswordLink() {
-    return (
-        <Link href="/" variant="body2">
-            Forgot password?
-        </Link>
-    );
-}
+// function ForgotPasswordLink() {
+//     return (
+//         <Link href="/" variant="body2">
+//             Forgot password?
+//         </Link>
+//     );
+// }
 
 function Login() {
     const theme = useTheme();
@@ -124,14 +124,13 @@ function Login() {
     const navigate = useNavigate();
 
     const handleLoginSubmit = async (provider, formData) => {
-        // const username = formData.get('email');
-        const username = "admin";
+        const email = formData.get('email');
         const password = formData.get('password');
 
         try {
             const response = await axios.post('http://localhost:8080/api/login',
                 new URLSearchParams({
-                    username,
+                    email,
                     password
                 }), {
                     headers: {
@@ -145,7 +144,7 @@ function Login() {
                 navigate('/home'); // 로그인 성공 시 home으로 리다이렉트
             }
         } catch (error) {
-            setError('Invalid username or password');
+            setError('Invalid email or password');
         }
     }
 
@@ -158,7 +157,7 @@ function Login() {
                     passwordField: CustomPasswordField,
                     submitButton: CustomButton,
                     signUpLink: SignUpLink,
-                    forgotPasswordLink: ForgotPasswordLink,
+                    // forgotPasswordLink: ForgotPasswordLink,
                 }}
                 providers={providers}
             />

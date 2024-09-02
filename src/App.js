@@ -6,6 +6,7 @@ import Navbar from "./page/Navbar";
 import NotFound from "./page/NotFound";
 import Contact from "./page/Contact";
 import Home from "./page/Home";
+import SignUp from "./page/sign-up/SignUp";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Navbar/>
           <Routes>
               <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
               <Route path="/home" element={<Home />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="*" element={<NotFound />} />
