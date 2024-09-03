@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-import axiosInstance from "../../util/axiosInstance";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -45,6 +45,8 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 
 function SignUp() {
 
+    const navigate = useNavigate();
+
     const [emailError, setEmailError] = React.useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
     const [passwordError, setPasswordError] = React.useState(false);
@@ -53,7 +55,7 @@ function SignUp() {
     const [nameErrorMessage, setNameErrorMessage] = React.useState('');
 
     const validateInputs = () => {
-        const email = document.getElementById('email');
+        const email = document.getElementById('emailAddress');
         const password = document.getElementById('password');
         const username = document.getElementById('username');
 
@@ -114,7 +116,7 @@ function SignUp() {
 
             if (response.request.responseURL) {
                 // Handle the redirect
-                window.location.href = response.request.responseURL;
+                navigate("/login")
             } else {
                 console.log('Sign up successful');
             }
@@ -160,13 +162,13 @@ function SignUp() {
                             />
                         </FormControl>
                         <FormControl>
-                            <FormLabel htmlFor="email">Email</FormLabel>
+                            <FormLabel htmlFor="emailAddress">Email</FormLabel>
                             <TextField
                                 required
                                 fullWidth
-                                id="email"
+                                id="emailAddress"
                                 placeholder="your@email.com"
-                                name="email"
+                                name="emailAddress"
                                 autoComplete="email"
                                 variant="outlined"
                                 error={emailError}
