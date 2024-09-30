@@ -124,25 +124,26 @@ function Login() {
     const navigate = useNavigate();
 
     const handleLoginSubmit = async (provider, formData) => {
-        const email = formData.get('email');
+        const emailAddress = formData.get('email');
         const password = formData.get('password');
+        const data = JSON.stringify({ emailAddress, password });
 
         try {
-            const response = await axios.post('http://localhost:8080/api/login',
-                new URLSearchParams({
-                    email,
-                    password
-                }), {
+            const response = await axios.post('http://localhost:8080/api/login', data,
+        {
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Access-Control-Allow-Credentials': true
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
                     withCredentials: true
                 });
 
+            console.log("response ::: " + response);
+
             if (response.status === 200) {
                 navigate('/home'); // 로그인 성공 시 home으로 리다이렉트
             }
+
         } catch (error) {
             setError('Invalid email or password');
         }
@@ -151,7 +152,7 @@ function Login() {
     return (
         <AppProvider theme={theme}>
             <SignInPage
-                signIn={(provider, formData) => handleLoginSubmit(provider, formData)}
+                signIn={(provider, formData) => {handleLoginSubmit(provider, formData)}}
                 slots={{
                     emailField: CustomEmailField,
                     passwordField: CustomPasswordField,

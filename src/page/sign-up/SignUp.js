@@ -109,7 +109,8 @@ function SignUp() {
         try {
             const response = await axios.post('http://localhost:8080/api/signup', jsonPayload, {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 withCredentials: true
             });
